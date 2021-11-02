@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\HistoryPosyandu;
+use App\Models\Balita;
+use App\Models\User;
 
 class AdminHistoryPosyanduController extends Controller
 {
@@ -13,7 +16,15 @@ class AdminHistoryPosyanduController extends Controller
      */
     public function index()
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {  
+            $history = HistoryPosyandu::with('balita.posyandu')->get();
+            return view('admin.historyPosyandu', ['history' => $history]);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -23,7 +34,20 @@ class AdminHistoryPosyanduController extends Controller
      */
     public function create()
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {
+            $balita = Balita::all();
+            return view('admin.historyPosyanduDetail', [
+                'type' => 'Create',
+                'url' => '/admin/history-posyandu',
+                'history' => null,
+                'balita' => $balita
+            ]);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -34,7 +58,29 @@ class AdminHistoryPosyanduController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) { 
+            $history = new HistoryPosyandu;
+            $history->id_balita = $request->input('id_balita');
+            $history->tgl_posyandu = $request->input('tgl_posyandu');
+            $history->berat_badan_balita = $request->input('berat_badan_balita');
+            $history->tinggi_badan = $request->input('tinggi_badan');
+            $history->save();
+
+            $balita = Balita::find($request->input('id_balita'));
+            $balita->status = 1;
+            $balita->save();
+            
+            $user = User::where('username', $balita->nik_orang_tua)->first();
+            $user->id_history_posyandu = $history->id;
+            $user->save();
+    
+            return redirect()->action([AdminHistoryPosyanduController::class, 'index']);
+        } else {
+            return redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -56,7 +102,21 @@ class AdminHistoryPosyanduController extends Controller
      */
     public function edit($id)
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {  
+            $history = HistoryPosyandu::find($id);
+            $balita = Balita::all();
+            return view('admin.historyPosyanduDetail', [
+                'type' => 'Update',
+                'url' => '/admin/history-posyandu/'.$id,                
+                'history' => $history,
+                'balita' => $balita
+            ]);
+        } else {
+            return redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -68,7 +128,21 @@ class AdminHistoryPosyanduController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {
+            $history = HistoryPosyandu::find($id);
+            $history->id_balita = $request->input('id_balita');
+            $history->tgl_posyandu = $request->input('tgl_posyandu');
+            $history->berat_badan_balita = $request->input('berat_badan_balita');
+            $history->tinggi_badan = $request->input('tinggi_badan');
+            $history->save();
+    
+            return redirect()->action([AdminHistoryPosyanduController::class, 'index']);
+        } else {
+            return redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -79,6 +153,16 @@ class AdminHistoryPosyanduController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {
+            $history = HistoryPosyandu::find($id);
+            $history->delete();
+
+            return redirect()->action([AdminHistoryPosyanduController::class, 'index']);
+        } else {
+            return redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 }

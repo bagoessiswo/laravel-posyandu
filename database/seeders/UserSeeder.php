@@ -17,13 +17,13 @@ class UserSeeder extends Seeder
         User::create([
             'id_history_posyandu' => 1,
             'username' => 'deaoktavia',
-            'password' => '123456'
+            'password' => 'asips'
         ]);
 
         User::create([
             'id_history_posyandu' => 1,
             'username' => 'nadyalovita',
-            'password' => '123456'
+            'password' => 'asips'
         ]);
     }
 }

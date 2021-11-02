@@ -23,7 +23,7 @@ class AdminUserController extends Controller
             $user = User::with('role')->get();
             return view('admin.user', ['user' => $user]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -46,7 +46,7 @@ class AdminUserController extends Controller
                 'role' => $role
             ]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -74,7 +74,7 @@ class AdminUserController extends Controller
     
             return redirect()->action([AdminUserController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -110,7 +110,7 @@ class AdminUserController extends Controller
                 'role' => $role
             ]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -139,7 +139,7 @@ class AdminUserController extends Controller
     
             return redirect()->action([AdminUserController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -162,7 +162,7 @@ class AdminUserController extends Controller
 
             return redirect()->action([AdminUserController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 }

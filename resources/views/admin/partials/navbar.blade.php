@@ -27,7 +27,7 @@
 <div class="sidebar-heading">
     Menu
 </div>
-
+@if (session('role')->role === 'Super Admin' || session('role')->role === 'Admin')
 <li class="nav-item">
     <a class="nav-link" href="/admin/balita">
         <i class="fas fa-fw fa-chart-area"></i>
@@ -40,7 +40,7 @@
       <span>History Posyandu</span>
   </a>
 </li>
-
+@endif
 @if (session('role')->role === 'Super Admin')
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"

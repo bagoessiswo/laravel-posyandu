@@ -21,7 +21,7 @@ class AdminKecamatanController extends Controller
             $kecamatan = Kecamatan::all();
             return view('admin.kecamatan', ['kecamatan' => $kecamatan]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -42,7 +42,7 @@ class AdminKecamatanController extends Controller
                 'kecamatan' => null
             ]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -64,7 +64,7 @@ class AdminKecamatanController extends Controller
     
             return redirect()->action([AdminKecamatanController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -98,7 +98,7 @@ class AdminKecamatanController extends Controller
                 'kecamatan' => $kecamatan
             ]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -121,7 +121,7 @@ class AdminKecamatanController extends Controller
     
             return redirect()->action([AdminKecamatanController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -142,7 +142,7 @@ class AdminKecamatanController extends Controller
 
             return redirect()->action([AdminKecamatanController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 }

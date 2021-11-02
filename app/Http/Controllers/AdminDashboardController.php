@@ -18,7 +18,7 @@ class AdminDashboardController extends Controller
         if($authUser) {  
             return view('admin.dashboard');
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 

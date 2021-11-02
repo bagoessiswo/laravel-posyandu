@@ -9,6 +9,9 @@ use App\Http\Controllers\AdminPosyanduController;
 use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminBalitaController;
+use App\Http\Controllers\AdminHistoryPosyanduController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HistoryPosyanduController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,9 +55,9 @@ Route::get('/', function () {
 
 });
 
-Route::get('/login', function () {
-    return redirect('/');
-});
+// Route::get('/login', function () {
+//     return redirect('/');
+// });
 
 Route::get('/register', function () {
     return view('register' , [
@@ -77,12 +80,12 @@ Route::get('/about', function () {
 
 });
 
-Route::get('/contact', function () {
-    return view('contact' , [
-        "title" => "Contact Us",
-    ]);
+// Route::get('/contact', function () {
+//     return view('contact' , [
+//         "title" => "Contact Us",
+//     ]);
 
-});
+// });
 
 Route::get('/news', function () {
     
@@ -146,6 +149,14 @@ Route::get('/news/{slug}' , function($slug){
     ]);
 });
 
+// user login
+Route::get('/login', [AuthController::class, 'index']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/logout', [AuthController::class, 'logout']);
+
+// history user
+Route::get('/history', [HistoryPosyanduController::class, 'index']);
+
 // admin login
 Route::get('/admin', [AdminDashboardController::class, 'index']);
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'index']);
@@ -200,4 +211,12 @@ Route::post('/admin/balita', [AdminBalitaController::class, 'store']);
 Route::get('/admin/balita/{id}', [AdminBalitaController::class, 'edit']);
 Route::patch('/admin/balita/{id}', [AdminBalitaController::class, 'update']);
 Route::delete('/admin/balita/{id}', [AdminBalitaController::class, 'destroy']);
+
+// history posyandu
+Route::get('/admin/history-posyandu', [AdminHistoryPosyanduController::class, 'index']);
+Route::get('/admin/history-posyandu/create', [AdminHistoryPosyanduController::class, 'create']);
+Route::post('/admin/history-posyandu', [AdminHistoryPosyanduController::class, 'store']);
+Route::get('/admin/history-posyandu/{id}', [AdminHistoryPosyanduController::class, 'edit']);
+Route::patch('/admin/history-posyandu/{id}', [AdminHistoryPosyanduController::class, 'update']);
+Route::delete('/admin/history-posyandu/{id}', [AdminHistoryPosyanduController::class, 'destroy']);
 

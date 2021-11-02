@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\UserRole;
 
 class AuthController extends Controller
 {
@@ -13,7 +15,14 @@ class AuthController extends Controller
      */
     public function index()
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser) {
+            return  redirect()->action([HistoryPosyanduController::class, 'index']);
+        } else {
+            return view('login');
+        }
     }
 
     /**
@@ -32,9 +41,34 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function login(Request $request)
     {
-        //
+        $user = User::where([
+            ['username', '=', $request->input('username')],
+            ['password', '=', $request->input('password')]
+        ])->first();
+
+        if($user) {
+            $role = (UserRole::where('id_user', $user->id)->with('role')->first())->role;
+            session(['user' => $user]);
+            session(['role' => $role]);
+            return redirect()->action([HistoryPosyanduController::class, 'index']);
+        } else {
+            return redirect()->action([AuthController::class, 'index']);
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        $request->session()->flush();
+
+        return redirect()->action([AuthController::class, 'index']);
     }
 
     /**

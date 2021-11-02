@@ -21,7 +21,7 @@ class AdminRoleController extends Controller
             $role = Role::all();
             return view('admin.role', ['role' => $role]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -42,7 +42,7 @@ class AdminRoleController extends Controller
                 'role' => null
             ]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -64,7 +64,7 @@ class AdminRoleController extends Controller
     
             return redirect()->action([AdminRoleController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -98,7 +98,7 @@ class AdminRoleController extends Controller
                 'role' => $role
             ]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -121,7 +121,7 @@ class AdminRoleController extends Controller
     
             return redirect()->action([AdminRoleController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -142,7 +142,7 @@ class AdminRoleController extends Controller
 
             return redirect()->action([AdminRoleController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 }

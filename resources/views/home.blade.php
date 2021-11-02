@@ -7,7 +7,7 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="site-heading">
                     <h1>ASIPS</h1>
-                    <span class="subheading">Child Is Our Future</span>
+                    <span class="subheading">Children Are Our Future</span>
                 </div>
             </div>
         </div>

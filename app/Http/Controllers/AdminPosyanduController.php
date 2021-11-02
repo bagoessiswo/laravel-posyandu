@@ -22,7 +22,7 @@ class AdminPosyanduController extends Controller
             $posyandu = Posyandu::with('kelurahan.kecamatan')->get();
             return view('admin.posyandu', ['posyandu' => $posyandu]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -45,7 +45,7 @@ class AdminPosyanduController extends Controller
                 'kelurahan' => $kelurahan
             ]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -69,7 +69,7 @@ class AdminPosyanduController extends Controller
     
             return redirect()->action([AdminPosyanduController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -105,7 +105,7 @@ class AdminPosyanduController extends Controller
                 'kelurahan' => $kelurahan
             ]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -130,7 +130,7 @@ class AdminPosyanduController extends Controller
     
             return redirect()->action([AdminPosyanduController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -151,7 +151,7 @@ class AdminPosyanduController extends Controller
 
             return redirect()->action([AdminPosyanduController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 }

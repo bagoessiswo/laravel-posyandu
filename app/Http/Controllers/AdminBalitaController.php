@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Balita;
 use App\Models\Posyandu;
+use App\Models\User;
+use App\Models\UserRole;
 
 class AdminBalitaController extends Controller
 {
@@ -19,10 +21,10 @@ class AdminBalitaController extends Controller
         $authRole = session('role');
 
         if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {  
-            $balita = Balita::with('posyandu.kelurahan.kecamatan')->get();
+            $balita = Balita::with('posyandu')->get();
             return view('admin.balita', ['balita' => $balita]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -45,7 +47,7 @@ class AdminBalitaController extends Controller
                 'posyandu' => $posyandu
             ]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -70,10 +72,20 @@ class AdminBalitaController extends Controller
             $balita->status = $request->input('status');
             $balita->id_posyandu = $request->input('id_posyandu');
             $balita->save();
+
+            $user = new User;
+            $user->username = $request->input('nik_orang_tua');
+            $user->password = '123456';
+            $user->save();
+
+            $userRole = new UserRole;
+            $userRole->id_user = $user->id;
+            $userRole->id_role = 3;
+            $userRole->save();
     
             return redirect()->action([AdminBalitaController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -109,7 +121,7 @@ class AdminBalitaController extends Controller
                 'posyandu' => $posyandu
             ]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -138,7 +150,7 @@ class AdminBalitaController extends Controller
     
             return redirect()->action([AdminBalitaController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -159,7 +171,7 @@ class AdminBalitaController extends Controller
 
             return redirect()->action([AdminBalitaController::class, 'index']);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 }

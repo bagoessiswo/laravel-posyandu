@@ -52,9 +52,9 @@ class AdminAuthController extends Controller
             $role = (UserRole::where('id_user', $user->id)->with('role')->first())->role;
             session(['user' => $user]);
             session(['role' => $role]);
-            return  redirect()->action([AdminDashboardController::class, 'index'], ['user' => $user]);
+            return redirect()->action([AdminDashboardController::class, 'index'], ['user' => $user]);
         } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
+            return redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -68,7 +68,7 @@ class AdminAuthController extends Controller
     {
         $request->session()->flush();
 
-        return  redirect()->action([AdminAuthController::class, 'index']);
+        return redirect()->action([AdminAuthController::class, 'index']);
     }
 
     /**
