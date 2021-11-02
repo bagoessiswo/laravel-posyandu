@@ -17,7 +17,7 @@ class Posyandu extends Model
     public $timestamps = true;
 
     public function kelurahan(){
-        return $this->belongsTo(Kelurahan::class, 'id', 'id_kelurahan');
+        return $this->belongsTo(Kelurahan::class, 'id_kelurahan', 'id');
     }
 
     public function balita(){

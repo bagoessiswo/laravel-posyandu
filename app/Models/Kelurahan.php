@@ -16,7 +16,7 @@ class Kelurahan extends Model
     public $timestamps = true;
 
     public function kecamatan(){
-        return $this->belongsTo(Kecamatan::class, 'id', 'id_kecamatan');
+        return $this->belongsTo(Kecamatan::class, 'id_kecamatan', 'id');
     }
 
     public function posyandu(){

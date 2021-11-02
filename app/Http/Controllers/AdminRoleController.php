@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Role;
 
 class AdminRoleController extends Controller
 {
@@ -13,7 +14,15 @@ class AdminRoleController extends Controller
      */
     public function index()
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && $authRole->role === 'Super Admin') {  
+            $role = Role::all();
+            return view('admin.role', ['role' => $role]);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -23,7 +32,18 @@ class AdminRoleController extends Controller
      */
     public function create()
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && $authRole->role === 'Super Admin') {  
+            return view('admin.roleDetail', [
+                'type' => 'Create',
+                'url' => '/admin/role',
+                'role' => null
+            ]);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -34,7 +54,18 @@ class AdminRoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && $authRole->role === 'Super Admin') {  
+            $role = new Role;
+            $role->role = $request->input('role');
+            $role->save();
+    
+            return redirect()->action([AdminRoleController::class, 'index']);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -56,7 +87,19 @@ class AdminRoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && $authRole->role === 'Super Admin') {  
+            $role = Role::find($id);
+            return view('admin.roleDetail', [
+                'type' => 'Update',
+                'url' => '/admin/role/'.$id,                
+                'role' => $role
+            ]);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -68,7 +111,18 @@ class AdminRoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && $authRole->role === 'Super Admin') {  
+            $role = Role::find($id);
+            $role->role = $request->input('role');
+            $role->save();
+    
+            return redirect()->action([AdminRoleController::class, 'index']);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -79,6 +133,16 @@ class AdminRoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && $authRole->role === 'Super Admin') {  
+            $role = Role::find($id);
+            $role->delete();
+
+            return redirect()->action([AdminRoleController::class, 'index']);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 }

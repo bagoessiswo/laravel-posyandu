@@ -1,6 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminKecamatanController;
+use App\Http\Controllers\AdminKelurahanController;
+use App\Http\Controllers\AdminPosyanduController;
+use App\Http\Controllers\AdminRoleController;
+use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AdminBalitaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -138,13 +146,58 @@ Route::get('/news/{slug}' , function($slug){
     ]);
 });
 
-Route::get('/admin/test', function() {
-    return view('admin.test', []);
-});
+// admin login
+Route::get('/admin', [AdminDashboardController::class, 'index']);
+Route::get('/admin/dashboard', [AdminDashboardController::class, 'index']);
+Route::get('/admin/login', [AdminAuthController::class, 'index']);
+Route::post('/admin/login', [AdminAuthController::class, 'login']);
+Route::get('/admin/logout', [AdminAuthController::class, 'logout']);
 
-Route::get('/admin/login', function() {
-    return view('admin.login', []);
-});
+// kecamatan
+Route::get('/admin/kecamatan', [AdminKecamatanController::class, 'index']);
+Route::get('/admin/kecamatan/create', [AdminKecamatanController::class, 'create']);
+Route::post('/admin/kecamatan', [AdminKecamatanController::class, 'store']);
+Route::get('/admin/kecamatan/{id}', [AdminKecamatanController::class, 'edit']);
+Route::patch('/admin/kecamatan/{id}', [AdminKecamatanController::class, 'update']);
+Route::delete('/admin/kecamatan/{id}', [AdminKecamatanController::class, 'destroy']);
 
+// kelurahan
+Route::get('/admin/kelurahan', [AdminKelurahanController::class, 'index']);
+Route::get('/admin/kelurahan/create', [AdminKelurahanController::class, 'create']);
+Route::post('/admin/kelurahan', [AdminKelurahanController::class, 'store']);
+Route::get('/admin/kelurahan/{id}', [AdminKelurahanController::class, 'edit']);
+Route::patch('/admin/kelurahan/{id}', [AdminKelurahanController::class, 'update']);
+Route::delete('/admin/kelurahan/{id}', [AdminKelurahanController::class, 'destroy']);
 
+// posyandu
+Route::get('/admin/posyandu', [AdminPosyanduController::class, 'index']);
+Route::get('/admin/posyandu/create', [AdminPosyanduController::class, 'create']);
+Route::post('/admin/posyandu', [AdminPosyanduController::class, 'store']);
+Route::get('/admin/posyandu/{id}', [AdminPosyanduController::class, 'edit']);
+Route::patch('/admin/posyandu/{id}', [AdminPosyanduController::class, 'update']);
+Route::delete('/admin/posyandu/{id}', [AdminPosyanduController::class, 'destroy']);
+
+// role
+Route::get('/admin/role', [AdminRoleController::class, 'index']);
+Route::get('/admin/role/create', [AdminRoleController::class, 'create']);
+Route::post('/admin/role', [AdminRoleController::class, 'store']);
+Route::get('/admin/role/{id}', [AdminRoleController::class, 'edit']);
+Route::patch('/admin/role/{id}', [AdminRoleController::class, 'update']);
+Route::delete('/admin/role/{id}', [AdminRoleController::class, 'destroy']);
+
+// user
+Route::get('/admin/user', [AdminUserController::class, 'index']);
+Route::get('/admin/user/create', [AdminUserController::class, 'create']);
+Route::post('/admin/user', [AdminUserController::class, 'store']);
+Route::get('/admin/user/{id}', [AdminUserController::class, 'edit']);
+Route::patch('/admin/user/{id}', [AdminUserController::class, 'update']);
+Route::delete('/admin/user/{id}', [AdminUserController::class, 'destroy']);
+
+// balita
+Route::get('/admin/balita', [AdminBalitaController::class, 'index']);
+Route::get('/admin/balita/create', [AdminBalitaController::class, 'create']);
+Route::post('/admin/balita', [AdminBalitaController::class, 'store']);
+Route::get('/admin/balita/{id}', [AdminBalitaController::class, 'edit']);
+Route::patch('/admin/balita/{id}', [AdminBalitaController::class, 'update']);
+Route::delete('/admin/balita/{id}', [AdminBalitaController::class, 'destroy']);
 

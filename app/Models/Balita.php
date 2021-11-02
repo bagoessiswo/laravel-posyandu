@@ -22,7 +22,7 @@ class Balita extends Model
     public $timestamps = true;
 
     public function posyandu(){
-        return $this->belongsTo(Posyandu::class, 'id', 'id_posyandu');
+        return $this->belongsTo(Posyandu::class, 'id_posyandu', 'id');
     }
 
     public function history_posyandu(){

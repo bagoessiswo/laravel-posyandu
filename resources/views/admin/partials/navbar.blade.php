@@ -14,7 +14,7 @@
 
 <!-- Nav Item - Dashboard -->
 <li class="nav-item active">
-    <a class="nav-link" href="index.html">
+    <a class="nav-link" href="/admin/dashboard">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span>
     </a>
@@ -29,17 +29,19 @@
 </div>
 
 <li class="nav-item">
-    <a class="nav-link" href="charts.html">
+    <a class="nav-link" href="/admin/balita">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Pendaftaran Balita</span>
     </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="charts.html">
+  <a class="nav-link" href="/admin/history-posyandu">
       <i class="fas fa-fw fa-chart-area"></i>
       <span>History Posyandu</span>
   </a>
 </li>
+
+@if (session('role')->role === 'Super Admin')
 <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
         aria-expanded="true" aria-controls="collapseOne">
@@ -48,14 +50,15 @@
     </a>
     <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="cards.html">Kecamatan</a>
-            <a class="collapse-item" href="buttons.html">Kelurahan</a>
-            <a class="collapse-item" href="buttons.html">Posyandu</a>
-            <a class="collapse-item" href="buttons.html">Role</a>
-            <a class="collapse-item" href="buttons.html">User</a>
+            <a class="collapse-item" href="/admin/kecamatan">Kecamatan</a>
+            <a class="collapse-item" href="/admin/kelurahan">Kelurahan</a>
+            <a class="collapse-item" href="/admin/posyandu">Posyandu</a>
+            <a class="collapse-item" href="/admin/role">Role</a>
+            <a class="collapse-item" href="/admin/user">User</a>
         </div>
     </div>
 </li>
+@endif
 
 <!-- Divider -->
 <hr class="sidebar-divider d-none d-md-block">

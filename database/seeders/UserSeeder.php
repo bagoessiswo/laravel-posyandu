@@ -15,15 +15,15 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Dea Oktavia',
-            'email' => 'dea.oktavia-2020@vokasi.unair.ac.id',
-            'password' => 'Janganlupalagi13'
+            'id_history_posyandu' => 1,
+            'username' => 'deaoktavia',
+            'password' => '123456'
         ]);
 
         User::create([
-            'name' => 'Nadya Lovita Sari',
-            'email' => 'nadya.lovita.sari-2020@vokasi.unair.ac.id',
-            'password' => '@nadya0604'
+            'id_history_posyandu' => 1,
+            'username' => 'nadyalovita',
+            'password' => '123456'
         ]);
     }
 }

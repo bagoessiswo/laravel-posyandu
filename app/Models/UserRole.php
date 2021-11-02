@@ -14,13 +14,13 @@ class UserRole extends Model
         'id_user', 
         'id_role'
     ];
-    public $timestamps = true;
+    public $timestamps = false;
 
     public function user(){
-        return $this->belongsTo(User::class, 'id', 'id_user');
+        return $this->belongsTo(User::class, 'id_user', 'id');
     }
 
     public function role(){
-        return $this->belongsTo(Role::class, 'id', 'id_role');
+        return $this->belongsTo(Role::class, 'id_role', 'id');
     }
 }

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\news;
 
 
 
@@ -19,10 +18,14 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         $this->call([
+            KecamatanSeeder::class,
+            KelurahanSeeder::class,
+            PosyanduSeeder::class,
+            BalitaSeeder::class,
+            HistoryPosyanduSeeder::class,
             UserSeeder::class,
             RoleSeeder::class,
-            PostSeeder::class,
-            CommentSeeder::class,
+            UserRoleSeeder::class
         ]);
     }
 }

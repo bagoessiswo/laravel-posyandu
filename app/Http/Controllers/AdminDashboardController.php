@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\UserRole;
 
-class AdminAuthController extends Controller
+class AdminDashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +14,11 @@ class AdminAuthController extends Controller
     public function index()
     {
         $authUser = session('user');
-        $authRole = session('role');
 
-        if($authUser) {
-            return  redirect()->action([AdminDashboardController::class, 'index']);
+        if($authUser) {  
+            return view('admin.dashboard');
         } else {
-            return view('admin.login');
+            return  redirect()->action([AdminAuthController::class, 'index']);
         }
     }
 
@@ -41,34 +38,9 @@ class AdminAuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function login(Request $request)
+    public function store(Request $request)
     {
-        $user = User::where([
-            ['username', '=', $request->input('username')],
-            ['password', '=', $request->input('password')]
-        ])->first();
-
-        if($user) {
-            $role = (UserRole::where('id_user', $user->id)->with('role')->first())->role;
-            session(['user' => $user]);
-            session(['role' => $role]);
-            return  redirect()->action([AdminDashboardController::class, 'index'], ['user' => $user]);
-        } else {
-            return  redirect()->action([AdminAuthController::class, 'index']);
-        }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function logout(Request $request)
-    {
-        $request->session()->flush();
-
-        return  redirect()->action([AdminAuthController::class, 'index']);
+        //
     }
 
     /**

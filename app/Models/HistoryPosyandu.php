@@ -18,7 +18,7 @@ class HistoryPosyandu extends Model
     public $timestamps = true;
 
     public function balita(){
-        return $this->belongsTo(Balita::class, 'id', 'id_balita');
+        return $this->belongsTo(Balita::class, 'id_balita', 'id');
     }
 
     public function user(){

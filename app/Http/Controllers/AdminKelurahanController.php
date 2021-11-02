@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Kelurahan;
+use App\Models\Kecamatan;
 
 class AdminKelurahanController extends Controller
 {
@@ -13,7 +15,15 @@ class AdminKelurahanController extends Controller
      */
     public function index()
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && $authRole->role === 'Super Admin') {  
+            $kelurahan = Kelurahan::with('kecamatan')->get();
+            return view('admin.kelurahan', ['kelurahan' => $kelurahan]);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -23,7 +33,20 @@ class AdminKelurahanController extends Controller
      */
     public function create()
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && $authRole->role === 'Super Admin') {  
+            $kecamatan = Kecamatan::all();
+            return view('admin.kelurahanDetail', [
+                'type' => 'Create',
+                'url' => '/admin/kelurahan',
+                'kelurahan' => null,
+                'kecamatan' => $kecamatan
+            ]);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -34,7 +57,19 @@ class AdminKelurahanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && $authRole->role === 'Super Admin') {  
+            $kelurahan = new Kelurahan;
+            $kelurahan->kelurahan = $request->input('kelurahan');
+            $kelurahan->id_kecamatan = $request->input('id_kecamatan');
+            $kelurahan->save();
+    
+            return redirect()->action([AdminKelurahanController::class, 'index']);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -56,7 +91,21 @@ class AdminKelurahanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && $authRole->role === 'Super Admin') {  
+            $kelurahan = Kelurahan::find($id);
+            $kecamatan = Kecamatan::all();
+            return view('admin.kelurahanDetail', [
+                'type' => 'Update',
+                'url' => '/admin/kelurahan/'.$id,
+                'kelurahan' => $kelurahan,
+                'kecamatan' => $kecamatan
+            ]);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -68,7 +117,19 @@ class AdminKelurahanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && $authRole->role === 'Super Admin') {  
+            $kelurahan = Kelurahan::find($id);
+            $kelurahan->kelurahan = $request->input('kelurahan');
+            $kelurahan->id_kecamatan = $request->input('id_kecamatan');
+            $kelurahan->save();
+    
+            return redirect()->action([AdminKelurahanController::class, 'index']);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 
     /**
@@ -79,6 +140,16 @@ class AdminKelurahanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $authUser = session('user');
+        $authRole = session('role');
+
+        if($authUser && $authRole->role === 'Super Admin') {  
+            $kelurahan = Kelurahan::find($id);
+            $kelurahan->delete();
+
+            return redirect()->action([AdminKelurahanController::class, 'index']);
+        } else {
+            return  redirect()->action([AdminAuthController::class, 'index']);
+        }
     }
 }

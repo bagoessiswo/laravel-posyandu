@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_history_posyandu')->constrained('history_posyandu');
+            $table->foreignId('id_history_posyandu')->nullable()->constrained('history_posyandu');
             $table->string('username', 50);
             $table->string('password', 8);
             $table->timestamps();
