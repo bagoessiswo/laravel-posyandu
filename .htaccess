@@ -2,4 +2,9 @@
     RewriteEngine on
     RewriteRule ^$ public/ [L]
     RewriteRule (.*) public/$1 [L]
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https 
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    RewriteCond %{HTTP_HOST} !=localhost
+    RewriteCond %{HTTP_HOST} !=127.0.0.1
 </IfModule>
