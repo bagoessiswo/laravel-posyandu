@@ -14,13 +14,22 @@ class AdminHistoryPosyanduController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $authUser = session('user');
         $authRole = session('role');
 
-        if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {  
-            $history = HistoryPosyandu::with('balita.posyandu')->get();
+        if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {
+            if ($request->input('search') !== "") {
+                $balita = Balita::where('nama_balita', 'like', '%' . $request->input('search') . '%')->first();
+                if ($balita) {
+                    $history = HistoryPosyandu::where('id_balita', $balita->id)->paginate(5);
+                } else {
+                    $history = HistoryPosyandu::where('id_balita', null)->paginate(5);
+                }
+            } else {
+                $history = HistoryPosyandu::with('balita.posyandu')->paginate(5);
+            }
             return view('admin.historyPosyandu', ['history' => $history]);
         } else {
             return  redirect()->action([AdminAuthController::class, 'index']);

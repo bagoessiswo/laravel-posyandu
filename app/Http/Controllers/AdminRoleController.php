@@ -12,13 +12,17 @@ class AdminRoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $authUser = session('user');
         $authRole = session('role');
 
-        if($authUser && $authRole->role === 'Super Admin') {  
-            $role = Role::all();
+        if($authUser && $authRole->role === 'Super Admin') {
+            if ($request->input('search') !== "") {
+                $role = Role::where('role', 'like', '%' . $request->input('search') . '%')->paginate(5);
+            } else { 
+                $role = Role::paginate(5);
+            }
             return view('admin.role', ['role' => $role]);
         } else {
             return redirect()->action([AdminAuthController::class, 'index']);

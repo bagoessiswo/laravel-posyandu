@@ -16,6 +16,7 @@ class CreateRolesTable extends Migration
         Schema::create('role', function (Blueprint $table) {
             $table->id();
             $table->string('role', 20);
+            $table->softDeletes();
         });
     }
 

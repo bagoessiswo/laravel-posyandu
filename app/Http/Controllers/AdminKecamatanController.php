@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Kecamatan;
+use App\Models\Kelurahan;
 
 class AdminKecamatanController extends Controller
 {
@@ -12,13 +13,17 @@ class AdminKecamatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $authUser = session('user');
         $authRole = session('role');
 
-        if($authUser && $authRole->role === 'Super Admin') {  
-            $kecamatan = Kecamatan::all();
+        if ($authUser && $authRole->role === 'Super Admin') {
+            if ($request->input('search') !== "") {
+                $kecamatan = Kecamatan::where('kecamatan', 'like', '%' . $request->input('search') . '%')->paginate(5);
+            } else {
+                $kecamatan = Kecamatan::paginate(5);
+            }
             return view('admin.kecamatan', ['kecamatan' => $kecamatan]);
         } else {
             return redirect()->action([AdminAuthController::class, 'index']);
@@ -139,6 +144,8 @@ class AdminKecamatanController extends Controller
         if($authUser && $authRole->role === 'Super Admin') {  
             $kecamatan = Kecamatan::find($id);
             $kecamatan->delete();
+
+            Kelurahan:where('id_kecamatan', $id)->delete();
 
             return redirect()->action([AdminKecamatanController::class, 'index']);
         } else {

@@ -23,7 +23,7 @@
                             @if ($type === 'Update')
                             <input type="text" class="form-control" id="nama_posyandu" name="nama_posyandu" placeholder="Nama posyandu..." value="{{ $posyandu->nama_posyandu }}">
                             @else
-                            <input type="text" class="form-control" id="nama_posyandu" name="nama_posyandu" placeholder="Nama posyandu...">
+                            <input type="text" class="form-control" id="nama_posyandu" name="nama_posyandu" placeholder="Nama posyandu..." required>
                             @endif
                         </div>
                         <div class="form-group">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\HistoryPosyandu;
 use App\Models\Balita;
 use App\Models\Posyandu;
 use App\Models\User;
@@ -15,13 +16,17 @@ class AdminBalitaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $authUser = session('user');
         $authRole = session('role');
 
-        if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {  
-            $balita = Balita::with('posyandu')->get();
+        if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {
+            if ($request->input('search') !== "") {
+                $balita = Balita::where('nama_balita', 'like', '%' . $request->input('search') . '%')->paginate(5);
+            } else {
+                $balita = Balita::with('posyandu')->paginate(5);
+            }
             return view('admin.balita', ['balita' => $balita]);
         } else {
             return redirect()->action([AdminAuthController::class, 'index']);
@@ -168,6 +173,9 @@ class AdminBalitaController extends Controller
         if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {
             $balita = Balita::find($id);
             $balita->delete();
+
+            $history = HistoryPosyandu::where('id_balita', $id)->first();
+            $history->delete();
 
             return redirect()->action([AdminBalitaController::class, 'index']);
         } else {

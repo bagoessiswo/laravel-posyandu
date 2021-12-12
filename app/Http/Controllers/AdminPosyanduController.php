@@ -13,13 +13,17 @@ class AdminPosyanduController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $authUser = session('user');
         $authRole = session('role');
 
-        if($authUser && $authRole->role === 'Super Admin') {  
-            $posyandu = Posyandu::with('kelurahan.kecamatan')->get();
+        if($authUser && $authRole->role === 'Super Admin') {
+            if ($request->input('search') !== "") {
+                $posyandu = Posyandu::where('nama_posyandu', 'like', '%' . $request->input('search') . '%')->paginate(5);
+            } else {
+                $posyandu = Posyandu::with('kelurahan.kecamatan')->paginate(5);
+            }
             return view('admin.posyandu', ['posyandu' => $posyandu]);
         } else {
             return redirect()->action([AdminAuthController::class, 'index']);

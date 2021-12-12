@@ -10,9 +10,17 @@
         <div class="col-md-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <a type="button" class="btn btn-success btn-md" href="/admin/history-posyandu/create">
-                        <i class="fas fa-plus"></i>
-                    </a>
+                    <div class="d-flex justify-content-between">
+                        <a type="button" class="btn btn-success btn-md" href="/admin/history-posyandu/create">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                        <div class="input-group" style="margin-left: 15px;">
+                            <form method="GET" action="/admin/history-posyandu" class="d-flex align-items-end">
+                                <input type="text" class="form-control" placeholder=" " name="search" style="margin-right: 3px;">
+                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -30,7 +38,7 @@
                             <tbody>
                             @foreach ($history as $data)
                                 <tr>
-                                    <td class="text-right">{{ $loop->index + 1 }}</td>
+                                    <td class="text-right">{{ $data->id }}</td>
                                     <td>
                                         <b>Nama Balita: </b>{{ $data->balita->nama_balita }}
                                         <br>
@@ -66,6 +74,12 @@
                             @endforeach
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    {{-- Pagination --}}
+                    <div class="d-flex justify-content-center">
+                        {!! $history->links("pagination::bootstrap-4") !!}
                     </div>
                 </div>
             </div>

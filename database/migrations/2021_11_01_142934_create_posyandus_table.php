@@ -19,6 +19,7 @@ class CreatePosyandusTable extends Migration
             $table->string('nama_posyandu', 20);
             $table->string('alamat_posyandu', 50);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -18,7 +18,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="{{ secure_asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
 </head>
 
@@ -35,7 +35,7 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image" style="background-image: url({{ secure_asset('img/admin/login.jpg') }}) !important"></div>
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image" style="background-image: url({{ asset('img/admin/login.jpg') }}) !important"></div>
                             <div class="col-lg-6">
                                 <div style="padding: 7rem 5rem;">
                                     <div class="text-center">
@@ -68,14 +68,14 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{ secure_asset('template/jquery/jquery.min.js') }}"></script>
-    <script src="{{ secure_asset('template/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('template/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('template/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="{{ secure_asset('template/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script src="{{ asset('template/jquery-easing/jquery.easing.min.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{ secure_asset('js/sb-admin-2.min.js') }}"></script>
+    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
 </body>
 

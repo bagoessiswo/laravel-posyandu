@@ -18,6 +18,7 @@ class CreateKelurahansTable extends Migration
             $table->foreignId('id_kecamatan')->constrained('kecamatan');
             $table->string('kelurahan', 20);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

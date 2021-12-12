@@ -20,6 +20,7 @@ class CreateHistoryPosyandusTable extends Migration
             $table->float('berat_badan_balita', 8, 2);
             $table->float('tinggi_badan', 8, 2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

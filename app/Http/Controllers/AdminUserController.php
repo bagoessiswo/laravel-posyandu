@@ -14,13 +14,17 @@ class AdminUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $authUser = session('user');
         $authRole = session('role');
 
-        if($authUser && $authRole->role === 'Super Admin') {  
-            $user = User::with('role')->get();
+        if($authUser && $authRole->role === 'Super Admin') {
+            if ($request->input('search') !== "") {
+                $user = User::where('username', 'like', '%' . $request->input('search') . '%')->paginate(5);
+            } else { 
+                $user = User::with('role')->paginate(5);
+            }
             return view('admin.user', ['user' => $user]);
         } else {
             return redirect()->action([AdminAuthController::class, 'index']);

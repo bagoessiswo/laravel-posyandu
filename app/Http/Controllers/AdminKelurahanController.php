@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Posyandu;
 use App\Models\Kelurahan;
 use App\Models\Kecamatan;
 
@@ -13,13 +14,17 @@ class AdminKelurahanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $authUser = session('user');
         $authRole = session('role');
 
-        if($authUser && $authRole->role === 'Super Admin') {  
-            $kelurahan = Kelurahan::with('kecamatan')->get();
+        if($authUser && $authRole->role === 'Super Admin') {
+            if ($request->input('search') !== "") {
+                $kelurahan = Kelurahan::where('kelurahan', 'like', '%' . $request->input('search') . '%')->paginate(5);
+            } else {
+                $kelurahan = Kelurahan::with('kecamatan')->paginate(5);
+            }
             return view('admin.kelurahan', ['kelurahan' => $kelurahan]);
         } else {
             return redirect()->action([AdminAuthController::class, 'index']);
@@ -146,6 +151,8 @@ class AdminKelurahanController extends Controller
         if($authUser && $authRole->role === 'Super Admin') {  
             $kelurahan = Kelurahan::find($id);
             $kelurahan->delete();
+
+            Posyandu::where('id_kelurahan', $id)->delete();
 
             return redirect()->action([AdminKelurahanController::class, 'index']);
         } else {

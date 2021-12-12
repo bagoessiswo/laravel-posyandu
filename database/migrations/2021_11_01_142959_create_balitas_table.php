@@ -23,6 +23,7 @@ class CreateBalitasTable extends Migration
             $table->char('jenis_kelamin_balita', 1);
             $table->smallInteger('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
