@@ -22,8 +22,8 @@ class AdminBalitaController extends Controller
         $authRole = session('role');
 
         if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {
-            if ($request->input('search') !== "") {
-                $balita = Balita::where('nama_balita', 'like', '%' . $request->input('search') . '%')->paginate(5);
+            if ($request->input('search') !== null && $request->input('search') !== "") {
+                $balita = Balita::where('nama_balita', 'like', '%' . $request->input('search') . '%')->with('posyandu')->paginate(5);
             } else {
                 $balita = Balita::with('posyandu')->paginate(5);
             }
@@ -175,7 +175,9 @@ class AdminBalitaController extends Controller
             $balita->delete();
 
             $history = HistoryPosyandu::where('id_balita', $id)->first();
-            $history->delete();
+            if ($history) {
+                $history->delete();
+            }
 
             return redirect()->action([AdminBalitaController::class, 'index']);
         } else {

@@ -20,8 +20,8 @@ class AdminKelurahanController extends Controller
         $authRole = session('role');
 
         if($authUser && $authRole->role === 'Super Admin') {
-            if ($request->input('search') !== "") {
-                $kelurahan = Kelurahan::where('kelurahan', 'like', '%' . $request->input('search') . '%')->paginate(5);
+            if ($request->input('search') !== null && $request->input('search') !== "") {
+                $kelurahan = Kelurahan::where('kelurahan', 'like', '%' . $request->input('search') . '%')->with('kecamatan')->paginate(5);
             } else {
                 $kelurahan = Kelurahan::with('kecamatan')->paginate(5);
             }

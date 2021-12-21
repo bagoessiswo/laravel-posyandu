@@ -116,6 +116,10 @@
                             </select>
                             @endif
                         </div>
+                        <div class="form-group">
+                            <label for="image" class="form-label">Post Image</label>
+                            <input class="form-control" type="file" id="image">
+                        </div>
                         <div>
                             <button type="submit" class="btn btn-info btn-md">
                                 Simpan

@@ -19,8 +19,8 @@ class AdminPosyanduController extends Controller
         $authRole = session('role');
 
         if($authUser && $authRole->role === 'Super Admin') {
-            if ($request->input('search') !== "") {
-                $posyandu = Posyandu::where('nama_posyandu', 'like', '%' . $request->input('search') . '%')->paginate(5);
+            if ($request->input('search') !== null && $request->input('search') !== "") {
+                $posyandu = Posyandu::where('nama_posyandu', 'like', '%' . $request->input('search') . '%')->with('kelurahan.kecamatan')->paginate(5);
             } else {
                 $posyandu = Posyandu::with('kelurahan.kecamatan')->paginate(5);
             }

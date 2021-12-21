@@ -20,12 +20,12 @@ class AdminHistoryPosyanduController extends Controller
         $authRole = session('role');
 
         if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {
-            if ($request->input('search') !== "") {
+            if ($request->input('search') !== null && $request->input('search') !== "") {
                 $balita = Balita::where('nama_balita', 'like', '%' . $request->input('search') . '%')->first();
                 if ($balita) {
-                    $history = HistoryPosyandu::where('id_balita', $balita->id)->paginate(5);
+                    $history = HistoryPosyandu::where('id_balita', $balita->id)->with('balita.posyandu')->paginate(5);
                 } else {
-                    $history = HistoryPosyandu::where('id_balita', null)->paginate(5);
+                    $history = HistoryPosyandu::where('id_balita', null)->with('balita.posyandu')->paginate(5);
                 }
             } else {
                 $history = HistoryPosyandu::with('balita.posyandu')->paginate(5);
@@ -82,9 +82,12 @@ class AdminHistoryPosyanduController extends Controller
             $balita->status = 1;
             $balita->save();
             
-            $user = User::where('username', $balita->nik_orang_tua)->first();
-            $user->id_history_posyandu = $history->id;
-            $user->save();
+            if ($history) {
+                $user = User::where('username', $balita->nik_orang_tua)->first();
+                $user->id_history_posyandu = $history->id;
+                $user->save();
+            }
+           
     
             return redirect()->action([AdminHistoryPosyanduController::class, 'index']);
         } else {

@@ -18,7 +18,7 @@ class AdminRoleController extends Controller
         $authRole = session('role');
 
         if($authUser && $authRole->role === 'Super Admin') {
-            if ($request->input('search') !== "") {
+            if ($request->input('search') !== null && $request->input('search') !== "") {
                 $role = Role::where('role', 'like', '%' . $request->input('search') . '%')->paginate(5);
             } else { 
                 $role = Role::paginate(5);

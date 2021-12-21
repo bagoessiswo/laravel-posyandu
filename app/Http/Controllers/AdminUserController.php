@@ -20,8 +20,8 @@ class AdminUserController extends Controller
         $authRole = session('role');
 
         if($authUser && $authRole->role === 'Super Admin') {
-            if ($request->input('search') !== "") {
-                $user = User::where('username', 'like', '%' . $request->input('search') . '%')->paginate(5);
+            if ($request->input('search') !== null && $request->input('search') !== "") {
+                $user = User::where('username', 'like', '%' . $request->input('search') . '%')->with('role')->paginate(5);
             } else { 
                 $user = User::with('role')->paginate(5);
             }
