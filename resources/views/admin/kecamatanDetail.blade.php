@@ -19,7 +19,7 @@
                             @method('PATCH')
                         @endif
                         <div class="form-group">
-                            <label><b>Nama Kecamatan</b></label>
+                            <label class="form-label"><b>Nama Kecamatan</b></label>
                             @if ($type === 'Update')
                             <input type="text" class="form-control" id="kecamatan" name="kecamatan" placeholder="Nama kecamatan..." value="{{ $kecamatan->kecamatan }}">
                             @else

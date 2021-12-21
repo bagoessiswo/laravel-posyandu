@@ -13,13 +13,13 @@
                     <h6 class="m-0 font-weight-bold text-primary">{{ $type }}</h6>
                 </div>
                 <div class="card-body">
-                    <form action="{{ $url }}" method="POST">
+                    <form action="{{ $url }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @if ($type === 'Update')
                             @method('PATCH')
                         @endif
                         <div class="form-group">
-                            <label><b>Nama Balita</b></label>
+                            <label class="form-label"><b>Nama Balita</b></label>
                             @if ($type === 'Update')
                             <input type="text" class="form-control" id="nama_balita" name="nama_balita" placeholder="Nama balita..." value="{{ $balita->nama_balita }}">
                             @else
@@ -27,7 +27,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label><b>NIK Orang Tua</b></label>
+                             <label class="form-label"><b>NIK Orang Tua</b></label>
                             @if ($type === 'Update')
                             <input type="text" class="form-control" id="nik_orang_tua" name="nik_orang_tua" placeholder="NIK orang tua..." value="{{ $balita->nik_orang_tua }}">
                             @else
@@ -35,7 +35,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label><b>Nama Orang Tua</b></label>
+                            <label class="form-label"><b>Nama Orang Tua</b></label>
                             @if ($type === 'Update')
                             <input type="text" class="form-control" id="nama_orang_tua" name="nama_orang_tua" placeholder="Nama orang tua..." value="{{ $balita->nama_orang_tua }}">
                             @else
@@ -43,7 +43,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label><b>Tgl. Lahir Balita</b></label>
+                            <label class="form-label"><b>Tgl. Lahir Balita</b></label>
                             @if ($type === 'Update')
                             <input type="text" class="form-control" id="tgl_lahir_balita" name="tgl_lahir_balita" placeholder="YYYY-MM-DD" value="{{ $balita->tgl_lahir_balita }}">
                             @else
@@ -51,7 +51,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label><b>Jenis Kelamin Balita</b></label>
+                            <label class="form-label"><b>Jenis Kelamin Balita</b></label>
                             @if ($type === 'Update')
                             <select class="form-control" id="jenis_kelamin_balita" name="jenis_kelamin_balita">
                                 @if ($balita->jenis_kelamin_balita === 'l')
@@ -74,7 +74,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label><b>Status</b></label>
+                            <label class="form-label"><b>Status</b></label>
                             @if ($type === 'Update')
                             <select class="form-control" id="status" name="status">
                                 @if ($balita->status === 1)
@@ -97,7 +97,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label><b>Posyandu</b></label>
+                            <label class="form-label"><b>Posyandu</b></label>
                             @if ($type === 'Update')
                             <select class="form-control" id="id_posyandu" name="id_posyandu">
                                 @foreach ($posyandu as $posyandu)
@@ -117,10 +117,15 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="image" class="form-label">Post Image</label>
-                            <input class="form-control" type="file" id="image">
-                        </div>
-                        <div>
+                            <label for="image" class="form-label"><b>Gambar Balita</b></label>
+                            <input type="file" style="padding: 3px;width: 30%;" class="form-control" id="image" name="image" placeholder="Gambar balita...">
+                            @if ($type === 'Update' && $balita->image !== null && $balita->image !== '')
+                            <img id="previewImage" src="{{ asset('uploads/balita/' . $balita->image) }}" style="width:200px;"class="rounded float-left" alt="">
+                            @else
+                            <img id="previewImage" src="{{ asset('noimage.jpg') }}" style="width:200px;" class="rounded float-left" alt="">
+                            @endif
+                        </div>            
+                        <div class="form-group" style="margin-left: 215px;">
                             <button type="submit" class="btn btn-info btn-md">
                                 Simpan
                             </button>

@@ -22,6 +22,7 @@ class CreateBalitasTable extends Migration
             $table->date('tgl_lahir_balita');
             $table->char('jenis_kelamin_balita', 1);
             $table->smallInteger('status');
+            $table->string('image', 255)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\HistoryPosyandu;
 use App\Models\Balita;
@@ -67,7 +67,24 @@ class AdminBalitaController extends Controller
         $authUser = session('user');
         $authRole = session('role');
 
-        if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) { 
+        if ($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {
+
+                // handle file upload
+            if ($request->hasFile('image')) {
+                // get filename with extension
+                $fileImageExt = $request->file('image')->getClientOriginalName();
+                // get just filename
+                $filename = pathinfo($fileImageExt, PATHINFO_FILENAME);
+                // get just ext
+                $extension = $request->file('image')->getClientOriginalExtension();
+                // filename to store
+                $fileImage = $filename.'_'.time().'.'.$extension;
+                // upload image
+                $path = $request->file('image')->storeAs('balita', $fileImage, 'public_uploads');
+            } else {
+                $fileImage = 'noimage.jpg';
+            }
+
             $balita = new Balita;
             $balita->nama_balita = $request->input('nama_balita');
             $balita->nik_orang_tua = $request->input('nik_orang_tua');
@@ -76,6 +93,7 @@ class AdminBalitaController extends Controller
             $balita->jenis_kelamin_balita = $request->input('jenis_kelamin_balita');
             $balita->status = $request->input('status');
             $balita->id_posyandu = $request->input('id_posyandu');
+            $balita->image = $fileImage;
             $balita->save();
 
             $user = new User;
@@ -144,6 +162,31 @@ class AdminBalitaController extends Controller
 
         if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {
             $balita = Balita::find($id);
+
+            // handle file upload
+            if ($request->hasFile('image')) {
+                // get filename with extension
+                $fileImageExt = $request->file('image')->getClientOriginalName();
+                // get just filename
+                $filename = pathinfo($fileImageExt, PATHINFO_FILENAME);
+                // get just ext
+                $extension = $request->file('image')->getClientOriginalExtension();
+                // filename to store
+                $fileImage = $filename.'_'.time().'.'.$extension;
+                // upload image
+                $path = $request->file('image')->storeAs('balita', $fileImage, 'public_uploads');
+                // delete file
+                if ($path && $balita->image !== 'noimage.jpg' && $balita->image !== null && $balita->image !== '') {
+                    Storage::disk('public_uploads')->delete('balita/'.$balita->image);
+                }
+            } else {
+                if ($balita->image === null || $balita->image === '') {
+                    $fileImage = 'noimage.jpg';
+                } else {
+                    $fileImage = $balita->image;
+                }
+            }
+
             $balita->nama_balita = $request->input('nama_balita');
             $balita->nik_orang_tua = $request->input('nik_orang_tua');
             $balita->nama_orang_tua = $request->input('nama_orang_tua');
@@ -151,6 +194,7 @@ class AdminBalitaController extends Controller
             $balita->jenis_kelamin_balita = $request->input('jenis_kelamin_balita');
             $balita->status = $request->input('status');
             $balita->id_posyandu = $request->input('id_posyandu');
+            $balita->image = $fileImage;
             $balita->save();
     
             return redirect()->action([AdminBalitaController::class, 'index']);

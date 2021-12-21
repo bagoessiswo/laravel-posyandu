@@ -13,13 +13,13 @@
                     <h6 class="m-0 font-weight-bold text-primary">{{ $type }}</h6>
                 </div>
                 <div class="card-body">
-                    <form action="{{ $url }}" method="POST">
+                    <form action="{{ $url }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @if ($type === 'Update')
                             @method('PATCH')
                         @endif
                         <div class="form-group">
-                            <label><b>Balita</b></label>
+                            <label class="form-label"><b>Balita</b></label>
                             @if ($type === 'Update')
                             <select class="form-control" id="id_balita" name="id_balita">
                                 @foreach ($balita as $balita)
@@ -39,7 +39,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label><b>Tgl. Posyandu</b></label>
+                            <label class="form-label"><b>Tgl. Posyandu</b></label>
                             @if ($type === 'Update')
                             <input type="text" class="form-control" id="tgl_posyandu" name="tgl_posyandu" placeholder="YYYY-MM-DD" value="{{ $history->tgl_posyandu }}">
                             @else
@@ -47,7 +47,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label><b>Berat Badan</b></label>
+                            <label class="form-label"><b>Berat Badan</b></label>
                             @if ($type === 'Update')
                             <input type="number" step="0.01" class="form-control" id="berat_badan_balita" name="berat_badan_balita" placeholder="kilogram (kg)" value="{{ $history->berat_badan_balita }}">
                             @else
@@ -55,7 +55,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label><b>Tinggi Badan</b></label>
+                            <label class="form-label"><b>Tinggi Badan</b></label>
                             @if ($type === 'Update')
                             <input type="number" step="0.01" class="form-control" id="tinggi_badan" name="tinggi_badan" placeholder="centimeter (cm)" value="{{ $history->tinggi_badan }}">
                             @else
@@ -63,10 +63,15 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="image" class="form-label">Post Image</label>
-                            <input class="form-control" type="file" id="image">
-                        </div>
-                        <div>
+                            <label for="image" class="form-label"><b>Foto</b></label>
+                            <input type="file" style="padding: 3px;width: 30%;" class="form-control" id="image" name="image" placeholder="Foto...">
+                            @if ($type === 'Update' && $history->image !== null && $history->image !== '')
+                            <img id="previewImage" src="{{ asset('uploads/history/' . $history->image) }}" style="width:200px;"class="rounded float-left" alt="">
+                            @else
+                            <img id="previewImage" src="{{ asset('noimage.jpg') }}" style="width:200px;" class="rounded float-left" alt="">
+                            @endif
+                        </div>            
+                        <div class="form-group" style="margin-left: 215px;">
                             <button type="submit" class="btn btn-info btn-md">
                                 Simpan
                             </button>

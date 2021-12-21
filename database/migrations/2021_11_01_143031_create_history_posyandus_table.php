@@ -19,6 +19,7 @@ class CreateHistoryPosyandusTable extends Migration
             $table->date('tgl_posyandu');
             $table->float('berat_badan_balita', 8, 2);
             $table->float('tinggi_badan', 8, 2);
+            $table->string('image', 255)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

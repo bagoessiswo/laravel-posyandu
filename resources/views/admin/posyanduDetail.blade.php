@@ -19,7 +19,7 @@
                             @method('PATCH')
                         @endif
                         <div class="form-group">
-                            <label><b>Nama Posyandu</b></label>
+                            <label class="form-label"><b>Nama Posyandu</b></label>
                             @if ($type === 'Update')
                             <input type="text" class="form-control" id="nama_posyandu" name="nama_posyandu" placeholder="Nama posyandu..." value="{{ $posyandu->nama_posyandu }}">
                             @else
@@ -27,7 +27,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label><b>Kelurahan</b></label>
+                            <label class="form-label"><b>Kelurahan</b></label>
                             @if ($type === 'Update')
                             <select class="form-control" id="id_kelurahan" name="id_kelurahan">
                                 @foreach ($kelurahan as $kelurahan)
@@ -47,7 +47,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label><b>Alamat Posyandu</b></label>
+                            <label class="form-label"><b>Alamat Posyandu</b></label>
                             @if ($type === 'Update')
                             <textarea type="text" class="form-control" id="alamat_posyandu" name="alamat_posyandu" placeholder="Alamat posyandu...">{{ $posyandu->alamat_posyandu }}</textarea>
                             @else

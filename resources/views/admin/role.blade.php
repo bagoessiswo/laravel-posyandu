@@ -35,7 +35,7 @@
                             <tbody>
                             @foreach ($role as $data)
                                 <tr>
-                                    <td class="text-right">{{ $data->id }}</td>
+                                    <td class="text-right">{{ $loop->iteration }}</td>
                                     <td>{{ $data->role }}</td>
                                     <td class="text-center">
                                         <div class="row m-0">

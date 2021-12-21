@@ -28,6 +28,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center" width=30px>No.</th>
+                                    <th class="text-center">Gambar</th>
                                     <th class="text-center">Balita</th>
                                     <th class="text-center">Tgl. Posyandu</th>
                                     <th class="text-center">Berat Badan</th>
@@ -38,7 +39,11 @@
                             <tbody>
                             @foreach ($history as $data)
                                 <tr>
-                                    <td class="text-right">{{ $data->id }}</td>
+                                    <td class="text-right">{{ $loop->iteration }}</td>
+                                    <td class="text-center">
+                                        <img src="{{ asset('uploads/history/' . $data->image) }}" style="width:200px;"class="rounded float-left" alt="">
+                                    </td>
+                                    </td>
                                     <td>
                                         <b>Nama Balita: </b>{{ $data->balita->nama_balita }}
                                         <br>

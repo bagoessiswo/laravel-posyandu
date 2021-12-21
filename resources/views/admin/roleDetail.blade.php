@@ -19,7 +19,7 @@
                             @method('PATCH')
                         @endif
                         <div class="form-group">
-                            <label><b>Role</b></label>
+                            <label class="form-label"><b>Role</b></label>
                             @if ($type === 'Update')
                             <input type="text" class="form-control" id="role" name="role" placeholder="Nama role..." value="{{ $role->role }}">
                             @else

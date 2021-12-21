@@ -18,7 +18,8 @@ class HistoryPosyanduSeeder extends Seeder
             'id_balita' => 1,
             'tgl_posyandu' => '2021-11-01',
             'berat_badan_balita' => 8.50,
-            'tinggi_badan' => 45.32
+            'tinggi_badan' => 45.32,
+            'image' => null
         ]);
     }
 }

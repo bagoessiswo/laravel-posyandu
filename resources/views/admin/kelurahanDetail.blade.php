@@ -19,7 +19,7 @@
                             @method('PATCH')
                         @endif
                         <div class="form-group">
-                            <label><b>Nama Kelurahan</b></label>
+                            <label class="form-label"><b>Nama Kelurahan</b></label>
                             @if ($type === 'Update')
                             <input type="text" class="form-control" id="kelurahan" name="kelurahan" placeholder="Nama kelurahan..." value="{{ $kelurahan->kelurahan }}">
                             @else
@@ -28,7 +28,7 @@
                             
                         </div>
                         <div class="form-group">
-                            <label><b>Kecamatan</b></label>
+                            <label class="form-label"><b>Kecamatan</b></label>
                             @if ($type === 'Update')
                             <select class="form-control" id="id_kecamatan" name="id_kecamatan">
                                 @foreach ($kecamatan as $kecamatan)

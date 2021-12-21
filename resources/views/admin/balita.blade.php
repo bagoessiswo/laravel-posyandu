@@ -28,6 +28,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center" width=30px>No.</th>
+                                    <th class="text-center">Gambar</th>
                                     <th class="text-center">Nama Balita</th>
                                     <th class="text-center">NIK Orang Tua</th>
                                     <th class="text-center">Nama Orang Tua</th>
@@ -40,7 +41,10 @@
                             <tbody>
                             @foreach ($balita as $data)
                                 <tr>
-                                    <td class="text-right">{{ $data->id }}</td>
+                                    <td class="text-right">{{$loop->iteration}}</td>
+                                    <td class="text-center">
+                                        <img src="{{ asset('uploads/balita/' . $data->image) }}" style="width:200px;"class="rounded float-left" alt="">
+                                    </td>
                                     <td>{{ $data->nama_balita }}</td>
                                     <td>{{ $data->nik_orang_tua }}</td>
                                     <td>{{ $data->nama_orang_tua }}</td>

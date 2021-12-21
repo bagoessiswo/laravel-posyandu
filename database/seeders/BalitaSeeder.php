@@ -21,7 +21,8 @@ class BalitaSeeder extends Seeder
             'nama_orang_tua' => 'Ipsum',
             'tgl_lahir_balita' => '2021-11-01',
             'jenis_kelamin_balita' => 'l',
-            'status' => 1
+            'status' => 1,
+            'image' => null
         ]);
     }
 }

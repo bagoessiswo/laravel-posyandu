@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\HistoryPosyandu;
 use App\Models\Balita;
@@ -70,12 +70,29 @@ class AdminHistoryPosyanduController extends Controller
         $authUser = session('user');
         $authRole = session('role');
 
-        if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) { 
+        if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {
+            // handle file upload
+            if ($request->hasFile('image')) {
+                // get filename with extension
+                $fileImageExt = $request->file('image')->getClientOriginalName();
+                // get just filename
+                $filename = pathinfo($fileImageExt, PATHINFO_FILENAME);
+                // get just ext
+                $extension = $request->file('image')->getClientOriginalExtension();
+                // filename to store
+                $fileImage = $filename.'_'.time().'.'.$extension;
+                // upload image
+                $path = $request->file('image')->storeAs('history', $fileImage, 'public_uploads');
+            } else {
+                $fileImage = 'noimage.jpg';
+            }
+
             $history = new HistoryPosyandu;
             $history->id_balita = $request->input('id_balita');
             $history->tgl_posyandu = $request->input('tgl_posyandu');
             $history->berat_badan_balita = $request->input('berat_badan_balita');
             $history->tinggi_badan = $request->input('tinggi_badan');
+            $history->image = $fileImage;
             $history->save();
 
             $balita = Balita::find($request->input('id_balita'));
@@ -145,10 +162,36 @@ class AdminHistoryPosyanduController extends Controller
 
         if($authUser && ($authRole->role === 'Super Admin'|| $authRole->role === 'Admin')) {
             $history = HistoryPosyandu::find($id);
+
+            // handle file upload
+            if ($request->hasFile('image')) {
+                // get filename with extension
+                $fileImageExt = $request->file('image')->getClientOriginalName();
+                // get just filename
+                $filename = pathinfo($fileImageExt, PATHINFO_FILENAME);
+                // get just ext
+                $extension = $request->file('image')->getClientOriginalExtension();
+                // filename to store
+                $fileImage = $filename.'_'.time().'.'.$extension;
+                // upload image
+                $path = $request->file('image')->storeAs('history', $fileImage, 'public_uploads');
+                // delete file
+                if ($path && $history->image !== 'noimage.jpg' && $history->image !== null && $history->image !== '') {
+                    torage::disk('public_uploads')->delete('history/'.$history->image);
+                }
+            } else {
+                if ($history->image === null || $history->image === '') {
+                    $fileImage = 'noimage.jpg';
+                } else {
+                    $fileImage = $history->image;
+                }
+            }
+
             $history->id_balita = $request->input('id_balita');
             $history->tgl_posyandu = $request->input('tgl_posyandu');
             $history->berat_badan_balita = $request->input('berat_badan_balita');
             $history->tinggi_badan = $request->input('tinggi_badan');
+            $history->image = $fileImage;
             $history->save();
     
             return redirect()->action([AdminHistoryPosyanduController::class, 'index']);

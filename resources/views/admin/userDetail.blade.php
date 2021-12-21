@@ -19,7 +19,7 @@
                             @method('PATCH')
                         @endif
                         <div class="form-group">
-                            <label><b>Username</b></label>
+                            <label class="form-label"><b>Username</b></label>
                             @if ($type === 'Update')
                             <input type="text" class="form-control" id="username" name="username" placeholder="Username..." value="{{ $user->username }}">
                             @else
@@ -27,7 +27,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label><b>Username</b></label>
+                            <label class="form-label"><b>Username</b></label>
                             @if ($type === 'Update')
                             <input type="password" class="form-control" id="password" name="password" value="{{ $user->password }}" placeholder="Password...">
                             @else
@@ -35,7 +35,7 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label><b>Role</b></label>
+                            <label class="form-label"><b>Role</b></label>
                             @if ($type === 'Update')
                             <select class="form-control" id="id_role" name="id_role">
                                 @foreach ($role as $role)

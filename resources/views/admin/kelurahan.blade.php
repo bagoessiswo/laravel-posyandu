@@ -36,7 +36,7 @@
                             <tbody>
                             @foreach ($kelurahan as $data)
                                 <tr>
-                                    <td class="text-right">{{ $data->id }}</td>
+                                    <td class="text-right">{{ $loop->iteration }}</td>
                                     <td>{{ $data->kelurahan }}</td>
                                     <td>{{ $data->kecamatan->kecamatan }}</td>
                                     <td class="text-center">
